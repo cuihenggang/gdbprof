@@ -1,11 +1,15 @@
 import sys
 
-sep_threads= True
+trace_file = sys.argv[1]
+mode = int(sys.argv[2])
+
+sep_threads= mode
+# sep_threads= False
 rev = True
 # watch_threads = [8,7,6,5,4, 3, 2,1]
 watch_threads = None
-# watch_threads = [1]
-min_lvl = 1
+# watch_threads = [13]
+min_lvl = 0
 max_lvl = 100
 
 
@@ -69,9 +73,9 @@ def print_tree(tree, lvl=0, tot=None, min_lvl=0, max_lvl=1000, min_pct=0):
     cks.reverse()
     ks = [ck[1] for ck in cks]
     for k in ks:
-        tabs = "    "
+        tabs = "  "
         if (lvl >= min_lvl):
-            tabs = "    "*(lvl - min_lvl)
+            tabs = "  "*(lvl - min_lvl)
         nr = tree[k][0]
         if (tot != None):
             # nr = int(100.0 *float(nr) / tot)
@@ -87,13 +91,8 @@ def print_tree(tree, lvl=0, tot=None, min_lvl=0, max_lvl=1000, min_pct=0):
         if lvl >= max_lvl:
             return
 
-
-if len(sys.argv) < 2:
-    print "usage: %s <tracefile>" % sys.argv[0]
-    sys.exit(0)
-
 blocks = []
-f = open(sys.argv[1])
+f = open(trace_file)
 while (True):
     b = read_block(f)
     if len(b) > 0:
